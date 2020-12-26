@@ -1,4 +1,4 @@
-# testRompler
+# JUCE Rompler Engine
 
 Features
 - Waveform Display
