@@ -12,6 +12,8 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "DialLookAndFeel.h"
+#include "MagView.h"
 
 //==============================================================================
 /*
@@ -26,6 +28,10 @@ public:
     void resized() override;
 
 private:
+    DialLookAndFeel dialLookAndFeel;
+
+    MagView mMagView;
+
     juce::Slider filterCutoffSlider, filterResSlider;
     juce::ComboBox filterTypeMenu;
 

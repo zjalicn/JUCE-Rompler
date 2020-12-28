@@ -11,7 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "WaveformDisplay.h"
-#include "ADSRComponent.h"
+#include "Envelope.h"
 #include "FilterComponent.h"
 
 //==============================================================================
@@ -32,9 +32,8 @@ public:
 
 private:
     WaveformDisplay mWaveformDisplay;
-    ADSRComponent mADSR;
+    Envelope mADSR;
     FilterComponent mFilter;
-    //juce::ImageComponent mImageComponent;
 
     TestRomplerAudioProcessor& audioProcessor;
 

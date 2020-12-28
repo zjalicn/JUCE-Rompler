@@ -6,13 +6,16 @@
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="latest">
   <MAINGROUP id="DuY9jf" name="testRompler">
     <GROUP id="{1E7EB153-A4D4-12D7-C763-57C1A856AA25}" name="Source">
-      <FILE id="zVfEpu" name="ADSRComponent.cpp" compile="1" resource="0"
-            file="Source/ADSRComponent.cpp"/>
+      <FILE id="x00xXi" name="MagView.cpp" compile="1" resource="0" file="Source/MagView.cpp"/>
+      <FILE id="zrEZiv" name="MagView.h" compile="0" resource="0" file="Source/MagView.h"/>
+      <FILE id="CkKOkr" name="DialLookAndFeel.h" compile="0" resource="0"
+            file="Source/DialLookAndFeel.h"/>
+      <FILE id="zVfEpu" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
+      <FILE id="hkXR0u" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="y7dcA3" name="FilterComponent.cpp" compile="1" resource="0"
             file="Source/FilterComponent.cpp"/>
       <FILE id="oXriIH" name="FilterComponent.h" compile="0" resource="0"
             file="Source/FilterComponent.h"/>
-      <FILE id="hkXR0u" name="ADSRComponent.h" compile="0" resource="0" file="Source/ADSRComponent.h"/>
       <FILE id="GfiOH4" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="AlCnNM" name="PluginProcessor.h" compile="0" resource="0"

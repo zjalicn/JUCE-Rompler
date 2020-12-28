@@ -9,17 +9,20 @@
 */
 
 #include <JuceHeader.h>
-#include "ADSRComponent.h"
+#include "Envelope.h"
 
 //==============================================================================
-ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
+Envelope::Envelope(TestRomplerAudioProcessor& p) : audioProcessor (p)
 {
-    // Attack 
+
+    // ATTACK
+    // Slider
     mAttackSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    mAttackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mAttackSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
+    mAttackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 14);
+    mAttackSlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(mAttackSlider);
 
+    // Label
     mAttackLabel.setFont(10.0f);
     mAttackLabel.setText("Attack", juce::NotificationType::dontSendNotification);
     mAttackLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -28,12 +31,14 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
 
     mAttackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "ATTACK", mAttackSlider);
 
-    // Decay
+    // DECAY
+    // Slider
     mDecaySlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    mDecaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mDecaySlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
+    mDecaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 14);
+    mDecaySlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(mDecaySlider);
 
+    // Label
     mDecayLabel.setFont(10.0f);
     mDecayLabel.setText("Delay", juce::NotificationType::dontSendNotification);
     mDecayLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -42,12 +47,14 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
 
     mDecayAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "DECAY", mDecaySlider);
 
-    // Sustain
+    // SUSTAIN
+    // Slider
     mSustainSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    mSustainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mSustainSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
+    mSustainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 14);
+    mSustainSlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(mSustainSlider);
 
+    // Label
     mSustainLabel.setFont(10.0f);
     mSustainLabel.setText("Sustain", juce::NotificationType::dontSendNotification);
     mSustainLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -56,12 +63,14 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
 
     mSustainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "SUSTAIN", mSustainSlider);
 
-    // Release
+    // RELEASE
+    // Slider
     mReleaseSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
-    mReleaseSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mReleaseSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
+    mReleaseSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, false, 50, 14);
+    mReleaseSlider.setLookAndFeel(&dialLookAndFeel);
     addAndMakeVisible(mReleaseSlider);
 
+    // Label
     mReleaseLabel.setFont(10.0f);
     mReleaseLabel.setText("Release", juce::NotificationType::dontSendNotification);
     mReleaseLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -72,16 +81,16 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
 
 }
 
-ADSRComponent::~ADSRComponent()
+Envelope::~Envelope()
 {
 }
 
-void ADSRComponent::paint (juce::Graphics& g)
+void Envelope::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colours::black);
 }
 
-void ADSRComponent::resized()
+void Envelope::resized()
 {
     const auto startY = 0.2f;
     const auto dialWidth = 0.15f;

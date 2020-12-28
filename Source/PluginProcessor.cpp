@@ -25,6 +25,7 @@ TestRomplerAudioProcessor::TestRomplerAudioProcessor()
 {
     mFormatManager.registerBasicFormats();
     mAPVTS.state.addListener(this);
+    mAPVTS.state.setProperty("SAMPLE_RATE", 44100.f, nullptr);
 
     for (int i = 0; i < mNumVoices; i++)
     {
@@ -36,7 +37,7 @@ TestRomplerAudioProcessor::~TestRomplerAudioProcessor()
 {
     mFormatReader = nullptr;
 }
-
+# pragma region dontuse
 //==============================================================================
 const juce::String TestRomplerAudioProcessor::getName() const
 {
@@ -98,6 +99,7 @@ const juce::String TestRomplerAudioProcessor::getProgramName (int index)
 void TestRomplerAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
 }
+# pragma endregion dontuse
 
 //==============================================================================
 void TestRomplerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
@@ -261,17 +263,10 @@ void TestRomplerAudioProcessor::updateFilter()
 
     switch (menuChoice) 
     {
-    case 0:
-        stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::lowPass;
-        break;
-    case 1:
-        stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::highPass;
-        break;
-    case 2:
-        stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::bandPass;
-        break;
-    default:
-        break;
+    case 0: stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::lowPass; break;
+    case 1: stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::highPass; break;
+    case 2: stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::bandPass; break;
+    default: break;
     }
 
     stateVariableFilter.state->setCutOffFrequency(mSampler.getSampleRate(), freq, res);
@@ -290,12 +285,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout TestRomplerAudioProcessor::c
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_TYPE", "Filter Type", 0.0f, 2.0f, 0.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_CUTOFF",
         "Filter Cutoff",
-    //    juce::NormalisableRange<float>(20.f, 20000.f, 0.01f, 0.2299f),
-        juce::NormalisableRange<float>(20.f, 20000.f),
+        juce::NormalisableRange<float>(20.f, 20000.f, 0.01f, 0.2299f),
         1000.0f,
         juce::String(),
         juce::AudioProcessorParameter::genericParameter,
-        [](float value, int) {return static_cast<juce::String>(round(value * 100.f) / 100.f); },
+        [](float value, int) {return static_cast<juce::String>(round(value));},
         [](const juce::String& text) {return text.getFloatValue(); }
     ));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_RES",
@@ -307,6 +301,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout TestRomplerAudioProcessor::c
         [](float value, int) {return static_cast<juce::String>(round(value * 100.f) / 100.f); },
         [](const juce::String& text) {return text.getFloatValue(); }
     ));
+
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("SAMPLE_RATE", "Sample Rate", 0.0f, 44100.0f, 44100.0f));
 
     return { parameters.begin(), parameters.end() };
 }

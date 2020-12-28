@@ -12,25 +12,28 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
+#include "DialLookAndFeel.h"
 
 //==============================================================================
 /*
 */
-class ADSRComponent  : public juce::Component
+class Envelope  : public juce::Component
 {
 public:
-    ADSRComponent(TestRomplerAudioProcessor& p);
-    ~ADSRComponent() override;
+    Envelope(TestRomplerAudioProcessor& p);
+    ~Envelope() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
 
 private:
+    DialLookAndFeel dialLookAndFeel;
+
     juce::Slider mAttackSlider, mDecaySlider, mSustainSlider, mReleaseSlider;
     juce::Label mAttackLabel, mDecayLabel, mSustainLabel, mReleaseLabel;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> mAttackAttachment, mDecayAttachment, mSustainAttachment, mReleaseAttachment;
 
     TestRomplerAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ADSRComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Envelope)
 };

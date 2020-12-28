@@ -12,44 +12,51 @@
 #include "FilterComponent.h"
 
 //==============================================================================
-FilterComponent::FilterComponent(TestRomplerAudioProcessor& p) : audioProcessor(p)
+FilterComponent::FilterComponent(TestRomplerAudioProcessor& p) : audioProcessor(p), mMagView(p.getValueTree())
 {
     setSize(200, 200);
 
+    //MAGNITUDE VIEW
+    addAndMakeVisible(mMagView);
+
+    //FILTER_TYPE
     filterTypeMenu.addItem("Low Pass", 1);
     filterTypeMenu.addItem("High Pass", 2);
     filterTypeMenu.addItem("Band Pass", 3);
 
-    //Filter Type Menu
     filterTypeMenu.setJustificationType(juce::Justification::centred);
     addAndMakeVisible(&filterTypeMenu);
     filterTypeAttachment = std::make_unique <juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.getValueTree(), "FILTER_TYPE", filterTypeMenu);
 
-    //Filter Cutoff
+    // FILTER_CUTOFF
+    // Slider
     filterCutoffSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    filterCutoffSlider.setRange(20.0, 20000.0);
-    filterCutoffSlider.setValue(20000.0);
     filterCutoffSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60, 20);
-    filterCutoffSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
-    // filterResSlider.setSkewFactorFromMidPoint(1000.0f);
+    filterCutoffSlider.setLookAndFeel(&dialLookAndFeel);
+    filterCutoffSlider.setRange(20.0f, 20000.0f);
+    filterCutoffSlider.setValue(20000.0f);
+    filterCutoffSlider.setTextValueSuffix(" Hz");
     addAndMakeVisible(&filterCutoffSlider);
     filterCutoffAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "FILTER_CUTOFF", filterCutoffSlider);
-
+    
+    // Label
     filterCutoffLabel.setFont(10.0f);
     filterCutoffLabel.setText("Cutoff", juce::NotificationType::dontSendNotification);
     filterCutoffLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     filterCutoffLabel.setJustificationType(juce::Justification::centredTop);
     filterCutoffLabel.attachToComponent(&filterCutoffSlider, false);
 
-    //Filter Resonance
+    // FILTER_RES
+    // Slider
     filterResSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    filterResSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60, 20);
+    filterResSlider.setLookAndFeel(&dialLookAndFeel);
     filterResSlider.setRange(1, 5);
     filterResSlider.setValue(1);
-    filterResSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60, 20);
-    filterResSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
     addAndMakeVisible(&filterResSlider);
     filterResAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "FILTER_RES", filterResSlider);
-
+    
+    // Label
     filterResLabel.setFont(10.0f);
     filterResLabel.setText("Resonance", juce::NotificationType::dontSendNotification);
     filterResLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
@@ -69,11 +76,15 @@ void FilterComponent::paint (juce::Graphics& g)
 
 void FilterComponent::resized()
 {
+    const auto startX = 0.5f;
     const auto startY = 0.4f;
-    const auto dialWidth = 0.5f;
+    const auto dialWidth = 0.25f;
     const auto dialHeight = 0.6f;
 
     filterTypeMenu.setBoundsRelative(0.0f, 0.0f, 1.0f, 0.15f);
-    filterCutoffSlider.setBoundsRelative(0.0f, startY, dialWidth, dialHeight);
-    filterResSlider.setBoundsRelative(0.5f, startY, dialWidth, dialHeight);
+
+    mMagView.setBoundsRelative(0.0f, 0.2f, 0.5f, 0.75f);
+
+    filterCutoffSlider.setBoundsRelative(startX, startY, dialWidth, dialHeight);
+    filterResSlider.setBoundsRelative(startX + dialWidth, startY, dialWidth, dialHeight);
 }
