@@ -5,10 +5,9 @@ Features
 - ADSR
 - Filters
 - Look And Feel (Credits to https://github.com/joonastuo/Filter for styling reference)
-- Sample Playhead (currently broken)
 
 To Do
-- Fix Playhead
+- Sample Playhead
 - Reverb
 - Delay
 - Distortion
