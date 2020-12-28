@@ -13,6 +13,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "DialLookAndFeel.h"
+#include "EnvelopeDisplay.h"
 
 //==============================================================================
 /*
@@ -28,6 +29,8 @@ public:
 
 private:
     DialLookAndFeel dialLookAndFeel;
+
+    EnvelopeDisplay mEnvDisplay;
 
     juce::Slider mAttackSlider, mDecaySlider, mSustainSlider, mReleaseSlider;
     juce::Label mAttackLabel, mDecayLabel, mSustainLabel, mReleaseLabel;

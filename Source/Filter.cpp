@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FilterComponent.cpp
+    Filter.cpp
     Created: 26 Dec 2020 3:47:31pm
     Author:  nzjal
 
@@ -9,15 +9,15 @@
 */
 
 #include <JuceHeader.h>
-#include "FilterComponent.h"
+#include "Filter.h"
 
 //==============================================================================
-FilterComponent::FilterComponent(TestRomplerAudioProcessor& p) : audioProcessor(p), mMagView(p.getValueTree())
+Filter::Filter(TestRomplerAudioProcessor& p) : audioProcessor(p), mFilterDisplay(p.getValueTree())
 {
     setSize(200, 200);
 
     //MAGNITUDE VIEW
-    addAndMakeVisible(mMagView);
+    addAndMakeVisible(mFilterDisplay);
 
     //FILTER_TYPE
     filterTypeMenu.addItem("Low Pass", 1);
@@ -65,26 +65,26 @@ FilterComponent::FilterComponent(TestRomplerAudioProcessor& p) : audioProcessor(
 
 }
 
-FilterComponent::~FilterComponent()
+Filter::~Filter()
 {
 }
 
-void FilterComponent::paint (juce::Graphics& g)
+void Filter::paint (juce::Graphics& g)
 {
     g.fillAll(juce::Colours::lightslategrey.darker());
 }
 
-void FilterComponent::resized()
+void Filter::resized()
 {
     const auto startX = 0.5f;
-    const auto startY = 0.4f;
-    const auto dialWidth = 0.25f;
-    const auto dialHeight = 0.6f;
+    const auto startY = 0.2f;
+    const auto dialWidth = 0.125f;
+    const auto dialHeight = 0.8f;
 
-    filterTypeMenu.setBoundsRelative(0.0f, 0.0f, 1.0f, 0.15f);
+    mFilterDisplay.setBoundsRelative(0.025f, 0.1f, 0.4f, 0.8f);
 
-    mMagView.setBoundsRelative(0.0f, 0.2f, 0.5f, 0.75f);
+    filterTypeMenu.setBoundsRelative(0.45f, 0.4f, dialWidth * 2 + 0.025f, 0.2f);
 
-    filterCutoffSlider.setBoundsRelative(startX, startY, dialWidth, dialHeight);
-    filterResSlider.setBoundsRelative(startX + dialWidth, startY, dialWidth, dialHeight);
+    filterCutoffSlider.setBoundsRelative(startX + (dialWidth * 2), startY, dialWidth, dialHeight);
+    filterResSlider.setBoundsRelative(startX + (dialWidth * 3), startY, dialWidth, dialHeight);
 }

@@ -12,7 +12,7 @@
 #include "PluginProcessor.h"
 #include "WaveformDisplay.h"
 #include "Envelope.h"
-#include "FilterComponent.h"
+#include "Filter.h"
 
 //==============================================================================
 /**
@@ -33,7 +33,7 @@ public:
 private:
     WaveformDisplay mWaveformDisplay;
     Envelope mADSR;
-    FilterComponent mFilter;
+    Filter mFilter;
 
     TestRomplerAudioProcessor& audioProcessor;
 

@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    FilterComponent.h
+    Filter.h
     Created: 26 Dec 2020 3:47:31pm
     Author:  nzjal
 
@@ -13,16 +13,16 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "DialLookAndFeel.h"
-#include "MagView.h"
+#include "FilterDisplay.h"
 
 //==============================================================================
 /*
 */
-class FilterComponent  : public juce::Component
+class Filter : public juce::Component
 {
 public:
-    FilterComponent(TestRomplerAudioProcessor& p);
-    ~FilterComponent() override;
+    Filter(TestRomplerAudioProcessor& p);
+    ~Filter() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
@@ -30,7 +30,7 @@ public:
 private:
     DialLookAndFeel dialLookAndFeel;
 
-    MagView mMagView;
+    FilterDisplay mFilterDisplay;
 
     juce::Slider filterCutoffSlider, filterResSlider;
     juce::ComboBox filterTypeMenu;
@@ -42,5 +42,5 @@ private:
 
     TestRomplerAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FilterComponent)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Filter)
 };

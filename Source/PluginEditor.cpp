@@ -13,18 +13,11 @@
 TestRomplerAudioProcessorEditor::TestRomplerAudioProcessorEditor (TestRomplerAudioProcessor& p)
     : AudioProcessorEditor (&p), mWaveformDisplay(p), mADSR(p), mFilter(p), audioProcessor (p)
 {
-    //auto beansImg = juce::ImageCache::getFromMemory(BinaryData::beans_png, BinaryData::beans_pngSize);
-
-    //if (!beansImg.isNull())
-    //    mImageComponent.setImage(beansImg, juce::RectanglePlacement::stretchToFit);
-    //else
-    //    jassert(!beansImg.isNull());
 
     addAndMakeVisible(mWaveformDisplay);
     addAndMakeVisible(mADSR);
     addAndMakeVisible(mFilter);
-    //addAndMakeVisible(mImageComponent);
-    setSize(400, 600);
+    setSize(600, 600);
 
     //startTimerHz(30);
 }
@@ -45,7 +38,6 @@ void TestRomplerAudioProcessorEditor::resized()
     mWaveformDisplay.setBoundsRelative(0.0f, 0.0f, 1.0f, 0.2f);
     mADSR.setBoundsRelative(0.0f, 0.2f, 1.0f, 0.2f);
     mFilter.setBoundsRelative(0.0f, 0.4f, 1.0f, 0.2f);
-    //mImageComponent.setBoundsRelative(0.0f, 0.5f, 0.4f, 0.5f);
 }
 
 void TestRomplerAudioProcessorEditor::timerCallback() {

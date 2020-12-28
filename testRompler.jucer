@@ -6,16 +6,31 @@
               pluginFormats="buildStandalone,buildVST3" cppLanguageStandard="latest">
   <MAINGROUP id="DuY9jf" name="testRompler">
     <GROUP id="{1E7EB153-A4D4-12D7-C763-57C1A856AA25}" name="Source">
-      <FILE id="x00xXi" name="MagView.cpp" compile="1" resource="0" file="Source/MagView.cpp"/>
-      <FILE id="zrEZiv" name="MagView.h" compile="0" resource="0" file="Source/MagView.h"/>
+      <GROUP id="{1E99A401-16AE-7F28-8CF5-1ABF93375247}" name="Components">
+        <GROUP id="{5BC27447-B86F-25ED-59F8-1CA48887EA44}" name="WaveformDisplay">
+          <FILE id="xUwFSC" name="WaveformDisplay.cpp" compile="1" resource="0"
+                file="Source/WaveformDisplay.cpp"/>
+          <FILE id="RftVrJ" name="WaveformDisplay.h" compile="0" resource="0"
+                file="Source/WaveformDisplay.h"/>
+        </GROUP>
+        <GROUP id="{F07DAFC0-7BEB-A627-C176-0CD692CBFFF3}" name="Envelope">
+          <FILE id="zVfEpu" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
+          <FILE id="hkXR0u" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
+          <FILE id="DtfibE" name="EnvelopeDisplay.cpp" compile="1" resource="0"
+                file="Source/EnvelopeDisplay.cpp"/>
+          <FILE id="sSBXBy" name="EnvelopeDisplay.h" compile="0" resource="0"
+                file="Source/EnvelopeDisplay.h"/>
+        </GROUP>
+        <GROUP id="{60A00353-DCD1-C27A-DBA7-5BE00C18FAE2}" name="Filter">
+          <FILE id="y7dcA3" name="Filter.cpp" compile="1" resource="0" file="Source/Filter.cpp"/>
+          <FILE id="oXriIH" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
+          <FILE id="x00xXi" name="FilterDisplay.cpp" compile="1" resource="0"
+                file="Source/FilterDisplay.cpp"/>
+          <FILE id="zrEZiv" name="FilterDisplay.h" compile="0" resource="0" file="Source/FilterDisplay.h"/>
+        </GROUP>
+      </GROUP>
       <FILE id="CkKOkr" name="DialLookAndFeel.h" compile="0" resource="0"
             file="Source/DialLookAndFeel.h"/>
-      <FILE id="zVfEpu" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
-      <FILE id="hkXR0u" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
-      <FILE id="y7dcA3" name="FilterComponent.cpp" compile="1" resource="0"
-            file="Source/FilterComponent.cpp"/>
-      <FILE id="oXriIH" name="FilterComponent.h" compile="0" resource="0"
-            file="Source/FilterComponent.h"/>
       <FILE id="GfiOH4" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="AlCnNM" name="PluginProcessor.h" compile="0" resource="0"
@@ -23,10 +38,6 @@
       <FILE id="xSemBh" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="JyJMZ8" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
-      <FILE id="xUwFSC" name="WaveformDisplay.cpp" compile="1" resource="0"
-            file="Source/WaveformDisplay.cpp"/>
-      <FILE id="RftVrJ" name="WaveformDisplay.h" compile="0" resource="0"
-            file="Source/WaveformDisplay.h"/>
     </GROUP>
     <GROUP id="{08DD4729-74AC-366A-CDF0-D2FCDE0DD097}" name="Resources"/>
   </MAINGROUP>

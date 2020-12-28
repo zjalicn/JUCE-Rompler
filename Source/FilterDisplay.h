@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    MagView.h
+    FilterDisplay.h
     Created: 28 Dec 2020 12:05:56am
     Author:  nzjal
 
@@ -17,12 +17,12 @@
 //==============================================================================
 /*
 */
-class MagView : public juce::Component, 
+class FilterDisplay : public juce::Component,
 				public juce::Timer
 {
 public:
-	MagView(juce::AudioProcessorValueTreeState& vt);
-	~MagView();
+	FilterDisplay(juce::AudioProcessorValueTreeState& vt);
+	~FilterDisplay();
 
 	void paint(juce::Graphics&) override;
 	void paintMarkers(juce::Graphics& g, float scaleX, float minX, float fs);
@@ -51,5 +51,5 @@ private:
 	float mOldRes = 0;
 	float mOldFilterType = -1;
 
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MagView)
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FilterDisplay)
 };

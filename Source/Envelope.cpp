@@ -12,8 +12,9 @@
 #include "Envelope.h"
 
 //==============================================================================
-Envelope::Envelope(TestRomplerAudioProcessor& p) : audioProcessor (p)
+Envelope::Envelope(TestRomplerAudioProcessor& p) : audioProcessor (p), mEnvDisplay(p.getValueTree())
 {
+    addAndMakeVisible(mEnvDisplay);
 
     // ATTACK
     // Slider
@@ -87,17 +88,20 @@ Envelope::~Envelope()
 
 void Envelope::paint (juce::Graphics& g)
 {
-    g.fillAll(juce::Colours::black);
+    g.fillAll(juce::Colours::dimgrey.darker());
 }
 
 void Envelope::resized()
 {
+    const auto startX = 0.5f;
     const auto startY = 0.2f;
-    const auto dialWidth = 0.15f;
+    const auto dialWidth = 0.125f;
     const auto dialHeight = 0.8f;
 
-    mAttackSlider.setBoundsRelative(0.4f, startY, dialWidth, dialHeight);
-    mDecaySlider.setBoundsRelative(0.55f, startY, dialWidth, dialHeight);
-    mSustainSlider.setBoundsRelative(0.7f, startY, dialWidth, dialHeight);
-    mReleaseSlider.setBoundsRelative(0.85f, startY, dialWidth, dialHeight);
+    mEnvDisplay.setBoundsRelative(0.025f, 0.1f, 0.4f, 0.8f);
+
+    mAttackSlider.setBoundsRelative(startX, startY, dialWidth, dialHeight);
+    mDecaySlider.setBoundsRelative(startX + dialWidth, startY, dialWidth, dialHeight);
+    mSustainSlider.setBoundsRelative(startX + (dialWidth * 2), startY, dialWidth, dialHeight);
+    mReleaseSlider.setBoundsRelative(startX + (dialWidth * 3), startY, dialWidth, dialHeight);
 }

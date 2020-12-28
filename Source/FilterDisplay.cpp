@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    MagView.cpp
+    FilterDisplay.cpp
     Created: 28 Dec 2020 12:05:56am
     Author:  nzjal
 
@@ -9,23 +9,23 @@
 */
 
 #include <JuceHeader.h>
-#include "MagView.h"
+#include "FilterDisplay.h"
 
 //==============================================================================
-MagView::MagView(juce::AudioProcessorValueTreeState& vt) : mAVPTS(vt), mFFT(fftOrder)
+FilterDisplay::FilterDisplay(juce::AudioProcessorValueTreeState& vt) : mAVPTS(vt), mFFT(fftOrder)
 {
 	// Timer to update filter magnitude response graph
 	startTimer(5);
 }
 
-MagView::~MagView()
+FilterDisplay::~FilterDisplay()
 {
 	// Empty destructor
 }
 
 //==============================================================================
 
-void MagView::paint(juce::Graphics& g)
+void FilterDisplay::paint(juce::Graphics& g)
 {
 	// Rounded rectangle around the graph with same but darker colour as the background
 	g.setColour(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId).darker(.8f));
@@ -84,7 +84,7 @@ void MagView::paint(juce::Graphics& g)
 
 //==============================================================================
 
-void MagView::paintMarkers(juce::Graphics& g, float scaleX, float minX, float fs)
+void FilterDisplay::paintMarkers(juce::Graphics& g, float scaleX, float minX, float fs)
 {
 	// Dash size for dashed lines
 	float myDash[2] = { 2.f, 2.f };
@@ -139,13 +139,13 @@ void MagView::paintMarkers(juce::Graphics& g, float scaleX, float minX, float fs
 
 //==============================================================================
 
-void MagView::resized()
+void FilterDisplay::resized()
 {
 }
 
 //==============================================================================
 
-void MagView::updateFilter()
+void FilterDisplay::updateFilter()
 {
 	// Filter parameters from plugin ValueTree
 	auto fc = mAVPTS.getRawParameterValue("FILTER_CUTOFF")->load();
@@ -166,7 +166,7 @@ void MagView::updateFilter()
 
 //==============================================================================
 
-void MagView::timerCallback()
+void FilterDisplay::timerCallback()
 {
 	// Repaint filter magnitude response if filter parameters have changed.
 	auto fc = mAVPTS.getRawParameterValue("FILTER_CUTOFF")->load();
@@ -188,7 +188,7 @@ void MagView::timerCallback()
 
 //==============================================================================
 
-void MagView::calcMagResponse()
+void FilterDisplay::calcMagResponse()
 {
 	// Create impulse
 	juce::zeromem(mImpulse, sizeof(mImpulse));
