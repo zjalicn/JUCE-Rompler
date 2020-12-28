@@ -155,6 +155,8 @@ void TestRomplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear(i, 0, buffer.getNumSamples());
 
+    mSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+
     // Filter
     juce::dsp::AudioBlock<float> block (buffer);
     updateFilter();
@@ -166,7 +168,6 @@ void TestRomplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         updateADSR();
     }
 
-    mSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
     //Playhead
     //juce::MidiMessage m;
@@ -255,8 +256,8 @@ void TestRomplerAudioProcessor::updateADSR()
 void TestRomplerAudioProcessor::updateFilter()
 {
     int menuChoice = mAPVTS.getRawParameterValue("FILTER_TYPE")->load();
-    int freq = mAPVTS.getRawParameterValue("FILTER_CUTOFF")->load();
-    int res = mAPVTS.getRawParameterValue("FILTER_RES")->load();
+    auto freq = mAPVTS.getRawParameterValue("FILTER_CUTOFF")->load();
+    auto res = mAPVTS.getRawParameterValue("FILTER_RES")->load();
 
     switch (menuChoice) 
     {
