@@ -60,11 +60,12 @@ public:
     juce::AudioBuffer<float>& getWaveForm() { return mWaveForm; }
 
     void updateADSR();
+    void updateFilter();
     juce::ADSR::Parameters& getADSRParams() { return mADSRParams; }
     juce::AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
     
-    std::atomic<bool>& isNotePlayed() { return mIsNotePlayed; }
-    std::atomic<int>& getSampleCount() { return mSampleCount; }
+    //std::atomic<bool>& isNotePlayed() { return mIsNotePlayed; }
+    //std::atomic<int>& getSampleCount() { return mSampleCount; }
 
 private:
     juce::Synthesiser mSampler;
@@ -73,17 +74,23 @@ private:
 
     juce::ADSR::Parameters mADSRParams;
 
+    //Read Files
     juce::AudioFormatManager mFormatManager;
     juce::AudioFormatReader* mFormatReader{ nullptr };
 
+    //Audio Processor Value Tree State
     juce::AudioProcessorValueTreeState mAPVTS;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
-    
 
     void valueTreePropertyChanged(juce::ValueTree& treeWhosePropertyHasChanged, const juce::Identifier& property);
+    
+    juce::dsp::ProcessorDuplicator<juce::dsp::StateVariableFilter::Filter<float>, juce::dsp::StateVariableFilter::Parameters<float>> stateVariableFilter;
+    double lastSampleRate;
+
     std::atomic<bool> mShouldUpdate{ false };
-    std::atomic<bool> mIsNotePlayed{ false };
-    std::atomic<int> mSampleCount{ 0 };
+    // Playhead
+    //std::atomic<bool> mIsNotePlayed{ false };
+    //std::atomic<int> mSampleCount{ 0 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestRomplerAudioProcessor)
 };

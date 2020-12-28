@@ -103,6 +103,16 @@ void TestRomplerAudioProcessor::changeProgramName (int index, const juce::String
 void TestRomplerAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     mSampler.setCurrentPlaybackSampleRate(sampleRate);
+
+    juce::dsp::ProcessSpec spec;
+    spec.sampleRate = lastSampleRate;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getTotalNumOutputChannels();
+
+    stateVariableFilter.reset();
+    updateFilter();
+    stateVariableFilter.prepare(spec);
+
     updateADSR();
 }
 
@@ -139,16 +149,24 @@ bool TestRomplerAudioProcessor::isBusesLayoutSupported (const BusesLayout& layou
 void TestRomplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    const int totalNumInputChannels = getTotalNumInputChannels();
+    const int totalNumOutputChannels = getTotalNumOutputChannels();
 
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    for (int i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear(i, 0, buffer.getNumSamples());
 
+    // Filter
+    juce::dsp::AudioBlock<float> block (buffer);
+    updateFilter();
+    stateVariableFilter.process(juce::dsp::ProcessContextReplacing<float>(block));
+
+    //Envelope
     if (mShouldUpdate)
     {
         updateADSR();
     }
+
+    mSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
     //Playhead
     //juce::MidiMessage m;
@@ -168,7 +186,6 @@ void TestRomplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
     //    mSampleCount = mIsNotePlayed ? mSampleCount += buffer.getNumSamples() : 0;
     //}
 
-    mSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
 //==============================================================================
@@ -235,6 +252,31 @@ void TestRomplerAudioProcessor::updateADSR()
     }
 }
 
+void TestRomplerAudioProcessor::updateFilter()
+{
+    int menuChoice = mAPVTS.getRawParameterValue("FILTER_TYPE")->load();
+    int freq = mAPVTS.getRawParameterValue("FILTER_CUTOFF")->load();
+    int res = mAPVTS.getRawParameterValue("FILTER_RES")->load();
+
+    switch (menuChoice) 
+    {
+    case 0:
+        stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::lowPass;
+        break;
+    case 1:
+        stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::highPass;
+        break;
+    case 2:
+        stateVariableFilter.state->type = juce::dsp::StateVariableFilter::Parameters<float>::Type::bandPass;
+        break;
+    default:
+        break;
+    }
+
+    stateVariableFilter.state->setCutOffFrequency(mSampler.getSampleRate(), freq, res);
+
+}
+
 juce::AudioProcessorValueTreeState::ParameterLayout TestRomplerAudioProcessor::createParameters()
 {
     std::vector<std::unique_ptr<juce::RangedAudioParameter>> parameters;
@@ -243,6 +285,27 @@ juce::AudioProcessorValueTreeState::ParameterLayout TestRomplerAudioProcessor::c
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY", "Decay", 0.0f, 3.0f, 2.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 1.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 2.0f));
+
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_TYPE", "Filter Type", 0.0f, 2.0f, 0.0f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_CUTOFF",
+        "Filter Cutoff",
+    //    juce::NormalisableRange<float>(20.f, 20000.f, 0.01f, 0.2299f),
+        juce::NormalisableRange<float>(20.f, 20000.f),
+        1000.0f,
+        juce::String(),
+        juce::AudioProcessorParameter::genericParameter,
+        [](float value, int) {return static_cast<juce::String>(round(value * 100.f) / 100.f); },
+        [](const juce::String& text) {return text.getFloatValue(); }
+    ));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_RES",
+        "Filter Resonance",
+        juce::NormalisableRange<float>(0.5f, 5.0f),
+        0.707f,
+        juce::String(),
+        juce::AudioProcessorParameter::genericParameter,
+        [](float value, int) {return static_cast<juce::String>(round(value * 100.f) / 100.f); },
+        [](const juce::String& text) {return text.getFloatValue(); }
+    ));
 
     return { parameters.begin(), parameters.end() };
 }

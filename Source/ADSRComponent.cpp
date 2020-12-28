@@ -17,7 +17,7 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
     // Attack 
     mAttackSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     mAttackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mAttackSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::red);
+    mAttackSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
     addAndMakeVisible(mAttackSlider);
 
     mAttackLabel.setFont(10.0f);
@@ -31,7 +31,7 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
     // Decay
     mDecaySlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     mDecaySlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mDecaySlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::red);
+    mDecaySlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
     addAndMakeVisible(mDecaySlider);
 
     mDecayLabel.setFont(10.0f);
@@ -45,7 +45,7 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
     // Sustain
     mSustainSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     mSustainSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mSustainSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::red);
+    mSustainSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
     addAndMakeVisible(mSustainSlider);
 
     mSustainLabel.setFont(10.0f);
@@ -59,7 +59,7 @@ ADSRComponent::ADSRComponent(TestRomplerAudioProcessor& p) : audioProcessor (p)
     // Release
     mReleaseSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryVerticalDrag);
     mReleaseSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 40, 20);
-    mReleaseSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::red);
+    mReleaseSlider.setColour(juce::Slider::ColourIds::thumbColourId, juce::Colours::cadetblue.darker());
     addAndMakeVisible(mReleaseSlider);
 
     mReleaseLabel.setFont(10.0f);

@@ -12,6 +12,7 @@
 #include "PluginProcessor.h"
 #include "WaveformDisplay.h"
 #include "ADSRComponent.h"
+#include "FilterComponent.h"
 
 //==============================================================================
 /**
@@ -32,7 +33,8 @@ public:
 private:
     WaveformDisplay mWaveformDisplay;
     ADSRComponent mADSR;
-    juce::ImageComponent mImageComponent;
+    FilterComponent mFilter;
+    //juce::ImageComponent mImageComponent;
 
     TestRomplerAudioProcessor& audioProcessor;
 
