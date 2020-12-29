@@ -59,13 +59,12 @@ public:
     int getNumSamplerSounds() { return mSampler.getNumSounds(); }
     juce::AudioBuffer<float>& getWaveForm() { return mWaveForm; }
 
+    void updateMainInGain();
+    void updateMainOutGain();
     void updateADSR();
     void updateFilter();
     juce::ADSR::Parameters& getADSRParams() { return mADSRParams; }
     juce::AudioProcessorValueTreeState& getValueTree() { return mAPVTS; }
-    
-    //std::atomic<bool>& isNotePlayed() { return mIsNotePlayed; }
-    //std::atomic<int>& getSampleCount() { return mSampleCount; }
 
 private:
     juce::Synthesiser mSampler;
@@ -88,9 +87,6 @@ private:
     double lastSampleRate;
 
     std::atomic<bool> mShouldUpdate{ false };
-    // Playhead
-    //std::atomic<bool> mIsNotePlayed{ false };
-    //std::atomic<int> mSampleCount{ 0 };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestRomplerAudioProcessor)
 };

@@ -106,6 +106,7 @@ void TestRomplerAudioProcessor::prepareToPlay (double sampleRate, int samplesPer
 {
     mSampler.setCurrentPlaybackSampleRate(sampleRate);
 
+    //Filter
     juce::dsp::ProcessSpec spec;
     spec.sampleRate = lastSampleRate;
     spec.maximumBlockSize = samplesPerBlock;
@@ -159,6 +160,10 @@ void TestRomplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
 
     mSampler.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
 
+    // Input Gain
+    auto inGain = mAPVTS.getRawParameterValue("GAIN_IN")->load();
+    buffer.applyGain(inGain);
+
     // Filter
     juce::dsp::AudioBlock<float> block (buffer);
     updateFilter();
@@ -170,24 +175,9 @@ void TestRomplerAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, 
         updateADSR();
     }
 
-
-    //Playhead
-    //juce::MidiMessage m;
-    //juce::MidiBuffer::Iterator it{ midiMessages };
-    //int sample;
-
-    //while (it.getNextEvent(m, sample)) 
-    //{
-    //    if (m.isNoteOn()) {
-    //        //start playhead
-    //        mIsNotePlayed = true;
-    //    }
-    //    else if (m.isNoteOff()) {
-    //        // stop playhead
-    //        mIsNotePlayed = false;
-    //    }
-    //    mSampleCount = mIsNotePlayed ? mSampleCount += buffer.getNumSamples() : 0;
-    //}
+    // Output Gain
+    auto outGain = mAPVTS.getRawParameterValue("GAIN_OUT")->load();
+    buffer.applyGain(outGain);
 
 }
 
@@ -238,7 +228,6 @@ void TestRomplerAudioProcessor::loadFile(const juce::String& path)
     updateADSR();
 }
 
-
 void TestRomplerAudioProcessor::updateADSR() 
 {
     mADSRParams.attack = mAPVTS.getRawParameterValue("ATTACK")->load();
@@ -283,10 +272,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout TestRomplerAudioProcessor::c
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE", "Release", 0.0f, 5.0f, 2.0f));
 
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_TYPE", "Filter Type", 0.0f, 2.0f, 0.0f));
+
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("FILTER_CUTOFF",
         "Filter Cutoff",
         juce::NormalisableRange<float>(20.f, 20000.f, 0.01f, 0.2299f),
-        1000.0f,
+        20000.0f,
         juce::String(),
         juce::AudioProcessorParameter::genericParameter,
         [](float value, int) {return static_cast<juce::String>(round(value));},
@@ -303,6 +293,26 @@ juce::AudioProcessorValueTreeState::ParameterLayout TestRomplerAudioProcessor::c
     ));
 
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("SAMPLE_RATE", "Sample Rate", 0.0f, 44100.0f, 44100.0f));
+
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN_IN",
+        "Master Gain In",
+        juce::NormalisableRange<float>(0.f, 1.1f),
+        0.9f,
+        juce::String(),
+        juce::AudioProcessorParameter::genericParameter,
+        [](float value, int) {return value == 0.0f ? "-inf" : static_cast<juce::String>(round(-60.f + 60.f * value) * 10 / 10); },
+        [](const juce::String& text) {return text.getFloatValue(); }
+    ));
+
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("GAIN_OUT",
+        "Master Gain Out",
+        juce::NormalisableRange<float>(0.f, 1.1f),
+        1.0f,
+        juce::String(),
+        juce::AudioProcessorParameter::genericParameter,
+        [](float value, int) {return value == 0.0f ? "-inf" : static_cast<juce::String>(round(-60.f + 60.f * value) * 10 / 10); },
+        [](const juce::String& text) {return text.getFloatValue(); }
+    ));
 
     return { parameters.begin(), parameters.end() };
 }

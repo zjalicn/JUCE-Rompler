@@ -2,16 +2,24 @@
 
 Features
 - Waveform Display
-- ADSR
+- ADSR w/ Display
 - Filters
 - Look And Feel (Credits to https://github.com/joonastuo/Filter for styling reference)
+- Input/Output Gain
+
 
 To Do
-- Add ADSR Envelope Display
-- Sample Playhead
-- Reverb
-- Delay
-- Distortion
-- Effect Chains (drag n drop fx)
-- Presets / Sound Banks
-- Update Filters (bit laggy + fix x scaling for resonance)
+- FX
+	- Distortion
+	- Reverb
+	- Delay
+	- Compressor
+	- Update Filters (bit laggy when dragging fast + fix y scaling for resonance)
+- Custom Slider Component
+- FX Chains
+	- Wrapper for FX 
+		- UI
+		- Drag n Drop re-ordering 
+		- meters on in/out
+- Switch from Sampler to Rompler Sound Banks
+- Resizable Window + Components (Flexbox)

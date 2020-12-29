@@ -41,7 +41,7 @@ Envelope::Envelope(TestRomplerAudioProcessor& p) : audioProcessor (p), mEnvDispl
 
     // Label
     mDecayLabel.setFont(10.0f);
-    mDecayLabel.setText("Delay", juce::NotificationType::dontSendNotification);
+    mDecayLabel.setText("Decay", juce::NotificationType::dontSendNotification);
     mDecayLabel.setColour(juce::Label::ColourIds::textColourId, juce::Colours::white);
     mDecayLabel.setJustificationType(juce::Justification::centredTop);
     mDecayLabel.attachToComponent(&mDecaySlider, false);

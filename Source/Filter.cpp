@@ -51,8 +51,8 @@ Filter::Filter(TestRomplerAudioProcessor& p) : audioProcessor(p), mFilterDisplay
     filterResSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     filterResSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 60, 20);
     filterResSlider.setLookAndFeel(&dialLookAndFeel);
-    filterResSlider.setRange(1, 5);
-    filterResSlider.setValue(1);
+    filterResSlider.setRange(1.0f, 5.0f);
+    filterResSlider.setValue(1.0f);
     addAndMakeVisible(&filterResSlider);
     filterResAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "FILTER_RES", filterResSlider);
     

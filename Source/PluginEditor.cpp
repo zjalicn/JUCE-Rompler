@@ -11,20 +11,17 @@
 
 //==============================================================================
 TestRomplerAudioProcessorEditor::TestRomplerAudioProcessorEditor (TestRomplerAudioProcessor& p)
-    : AudioProcessorEditor (&p), mWaveformDisplay(p), mADSR(p), mFilter(p), audioProcessor (p)
+    : AudioProcessorEditor (&p), mWaveformDisplay(p), mGain(p.getValueTree()), mADSR(p), mFilter(p), audioProcessor (p)
 {
-
     addAndMakeVisible(mWaveformDisplay);
+    addAndMakeVisible(mGain);
     addAndMakeVisible(mADSR);
     addAndMakeVisible(mFilter);
     setSize(600, 600);
-
-    //startTimerHz(30);
 }
 
 TestRomplerAudioProcessorEditor::~TestRomplerAudioProcessorEditor()
 {
-    //stopTimer();
 }
 
 //==============================================================================
@@ -35,7 +32,8 @@ void TestRomplerAudioProcessorEditor::paint (juce::Graphics& g)
 
 void TestRomplerAudioProcessorEditor::resized()
 {
-    mWaveformDisplay.setBoundsRelative(0.0f, 0.0f, 1.0f, 0.2f);
+    mWaveformDisplay.setBoundsRelative(0.0f, 0.0f, 0.8f, 0.2f);
+    mGain.setBoundsRelative(0.8f, 0.0f, 0.2f, 0.2f);
     mADSR.setBoundsRelative(0.0f, 0.2f, 1.0f, 0.2f);
     mFilter.setBoundsRelative(0.0f, 0.4f, 1.0f, 0.2f);
 }

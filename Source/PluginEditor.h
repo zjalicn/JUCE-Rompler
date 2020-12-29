@@ -11,6 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "WaveformDisplay.h"
+#include "MasterGain.h"
 #include "Envelope.h"
 #include "Filter.h"
 
@@ -32,6 +33,7 @@ public:
 
 private:
     WaveformDisplay mWaveformDisplay;
+    MasterGain mGain;
     Envelope mADSR;
     Filter mFilter;
 

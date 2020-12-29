@@ -7,6 +7,10 @@
   <MAINGROUP id="DuY9jf" name="testRompler">
     <GROUP id="{1E7EB153-A4D4-12D7-C763-57C1A856AA25}" name="Source">
       <GROUP id="{1E99A401-16AE-7F28-8CF5-1ABF93375247}" name="Components">
+        <GROUP id="{DFE3B6D3-592F-BAAC-1846-17FC22279B94}" name="MasterGain">
+          <FILE id="Z3WDNd" name="MasterGain.cpp" compile="1" resource="0" file="Source/MasterGain.cpp"/>
+          <FILE id="F3KTzR" name="MasterGain.h" compile="0" resource="0" file="Source/MasterGain.h"/>
+        </GROUP>
         <GROUP id="{5BC27447-B86F-25ED-59F8-1CA48887EA44}" name="WaveformDisplay">
           <FILE id="xUwFSC" name="WaveformDisplay.cpp" compile="1" resource="0"
                 file="Source/WaveformDisplay.cpp"/>

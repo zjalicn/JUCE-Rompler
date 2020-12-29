@@ -15,7 +15,7 @@
 FilterDisplay::FilterDisplay(juce::AudioProcessorValueTreeState& vt) : mAVPTS(vt), mFFT(fftOrder)
 {
 	// Timer to update filter magnitude response graph
-	startTimer(5);
+	startTimer(10);
 }
 
 FilterDisplay::~FilterDisplay()
