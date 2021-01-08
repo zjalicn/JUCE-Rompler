@@ -14,6 +14,7 @@
 #include "MasterGain.h"
 #include "Envelope.h"
 #include "Filter.h"
+#include "Distortion.h"
 
 //==============================================================================
 /**
@@ -36,6 +37,7 @@ private:
     MasterGain mGain;
     Envelope mADSR;
     Filter mFilter;
+    //Distortion mDistortion;
 
     TestRomplerAudioProcessor& audioProcessor;
 

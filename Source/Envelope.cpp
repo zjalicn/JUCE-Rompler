@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    ADSRComponent.cpp
+    Envelope.cpp
     Created: 26 Dec 2020 1:46:32am
     Author:  nzjal
 
@@ -79,7 +79,6 @@ Envelope::Envelope(TestRomplerAudioProcessor& p) : audioProcessor (p), mEnvDispl
     mReleaseLabel.attachToComponent(&mReleaseSlider, false);
 
     mReleaseAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.getValueTree(), "RELEASE", mReleaseSlider);
-
 }
 
 Envelope::~Envelope()

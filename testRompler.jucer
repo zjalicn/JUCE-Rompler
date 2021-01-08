@@ -7,6 +7,10 @@
   <MAINGROUP id="DuY9jf" name="testRompler">
     <GROUP id="{1E7EB153-A4D4-12D7-C763-57C1A856AA25}" name="Source">
       <GROUP id="{1E99A401-16AE-7F28-8CF5-1ABF93375247}" name="Components">
+        <GROUP id="{41A32FB2-7B0F-0939-EEB4-021008AF279B}" name="Distortion">
+          <FILE id="NHukIS" name="Distortion.cpp" compile="1" resource="0" file="Source/Distortion.cpp"/>
+          <FILE id="n4oNYf" name="Distortion.h" compile="0" resource="0" file="Source/Distortion.h"/>
+        </GROUP>
         <GROUP id="{DFE3B6D3-592F-BAAC-1846-17FC22279B94}" name="MasterGain">
           <FILE id="Z3WDNd" name="MasterGain.cpp" compile="1" resource="0" file="Source/MasterGain.cpp"/>
           <FILE id="F3KTzR" name="MasterGain.h" compile="0" resource="0" file="Source/MasterGain.h"/>

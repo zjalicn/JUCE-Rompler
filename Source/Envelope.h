@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    ADSRComponent.h
+    Envelope.h
     Created: 26 Dec 2020 1:46:32am
     Author:  nzjal
 
@@ -18,7 +18,7 @@
 //==============================================================================
 /*
 */
-class Envelope  : public juce::Component
+class Envelope : public juce::Component
 {
 public:
     Envelope(TestRomplerAudioProcessor& p);
