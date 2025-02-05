@@ -1,3 +1,5 @@
+![Pulse Background Img](./1345481.jpg)
+
 # ♾️ Pulse
 
 Pulse is a rompler-style VST plugin that combines extensive sound design capabilities with an intuitive, modern interface. 
